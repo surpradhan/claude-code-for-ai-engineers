@@ -1,0 +1,22 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python (in case the repo is extended with helper scripts)
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Backups created by install.sh
+*.bak.*
+
+# Local Claude Code state if anyone clones into a project dir
+.claude/
