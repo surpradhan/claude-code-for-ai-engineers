@@ -5,7 +5,27 @@ This is the open-source preview of *Claude Code for AI Engineers*, a methodology
 The preview includes two of six skills, one of three project templates, and one of five slash commands. **The full pack is available on Gumroad: [surpradhan.gumroad.com/l/claude-code-for-ai-engineers](https://surpradhan.gumroad.com/l/claude-code-for-ai-engineers).**
 
 ---
+## Verified by self-test
 
+This pack has its own eval harness. The harness caught two real bugs in the skills before this README went up — fixes in [`9b845a4`](https://github.com/surpradhan/claude-code-for-ai-engineers/commit/9b845a4) (baseline gate enforcement) and [`b8c0215`](https://github.com/surpradhan/claude-code-for-ai-engineers/commit/b8c0215) (refusal script wording). That's the result that matters; the rest is regression coverage.
+
+Latest run (2026-06-15) on the preview skills:
+
+- **Triggering on `rag-eval-harness` (n=30):** 15/15 should-fire prompts fired, 0/15 near-misses fired. Small N by design — this catches regressions on the description, not generalization. [Prompts](https://github.com/surpradhan/claude-code-for-ai-engineers-eval/blob/main/scenarios/triggers.yaml).
+- **Behavior (5 scenarios):** two-variable comparison pushback, baseline required, fixed dataset required, adversarial-skip-the-gate, deterministic variables locked. All 9 assertions pass. The adversarial scenario explicitly asks Claude to skip the methodology gate. Claude held.
+- **Judge calibration:** Haiku and Sonnet agreed on all 9 assertions. Easy-case agreement, not robustness — the calibration value will rise as new scenarios are added.
+
+Harness: [claude-code-for-ai-engineers-eval](https://github.com/surpradhan/claude-code-for-ai-engineers-eval) · [full report](https://github.com/surpradhan/claude-code-for-ai-engineers-eval/blob/main/results/20260615-072714/report.md)
+
+### What a skill firing looks like
+
+**You:** "Scaffold a RAG benchmark comparing LangChain BM25 to LlamaIndex hybrid retrieval."
+
+**Claude (`rag-eval-harness` loaded):** "Hold on — this varies two things at once: the framework AND the retriever. The delta you measure won't be interpretable. Two options: (1) narrow to one variable (e.g. LlamaIndex BM25 vs LlamaIndex hybrid), or (2) keep both but document the confound explicitly. Which one?"
+
+That's the entire pitch. The skills refuse to scaffold the test that won't answer your question.
+
+---
 ## What's in this preview (open-source, MIT)
 
 **Two skills** (`skills/`)
