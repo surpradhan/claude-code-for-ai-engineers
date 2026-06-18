@@ -29,6 +29,8 @@ A useful RAG eval harness fixes everything except the variable being tested. The
 
 If a user proposes a comparison that varies two things at once (e.g., "let's compare LangChain BM25 vs LlamaIndex hybrid" — two retrievers AND two frameworks), stop and call it out before writing any code. Two-variable comparisons produce results that say more about noise than architecture.
 
+If a user requests an evaluation without a baseline (e.g., "I don't need a baseline, just measure my retriever's quality"), stop and explain why before writing any code. A lone recall@5 score is uninterpretable — only the gap to a reference tells you whether the architecture is good. Add BM25 as the mandatory baseline and do not scaffold a single-system harness.
+
 ## Step-by-step
 
 ### 1. Choose the dataset
